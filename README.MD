@@ -134,7 +134,7 @@ aspect_extractor.batch_predict(inference_source=atepc_examples,  #
 ```python3
 from pyabsa import AspectTermExtraction as ATEPC
 
-# checkpoint_map = available_checkpoints(from_local=False)
+# checkpoint_map = available_checkpoints()
 
 
 aspect_extractor = ATEPC.AspectExtractor('multilingual',

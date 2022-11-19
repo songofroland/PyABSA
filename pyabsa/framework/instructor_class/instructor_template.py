@@ -237,10 +237,12 @@ class BaseTrainingInstructor:
                             self.config.model.__name__))
                     self.model = torch.load(model_path[0])
                 if state_dict_path:
-                    if torch.cuda.device_count() > 1 and self.config.device == DeviceTypeOption.ALL_CUDA:
+                    if torch.cuda.device_count() == 0:
+                        self.model.load_state_dict(torch.load(state_dict_path[0], map_location=DeviceTypeOption.CPU))
+                    elif torch.cuda.device_count() > 1 and self.config.device == DeviceTypeOption.ALL_CUDA:
                         self.model.module.load_state_dict(torch.load(state_dict_path[0]))
                     else:
-                        self.model.load_state_dict(torch.load(state_dict_path[0], map_location=self.config.device))
+                        self.model.load_state_dict(torch.load(state_dict_path[0]))
                     self.model.config = self.config
                     self.model.to(self.config.device)
                 else:
